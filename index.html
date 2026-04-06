@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S & A Wedding Invitation</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <section class="hero-envelope">
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="wax-seal" onclick="openInvitation()">
+                    <span class="initials">S & A</span>
+                </div>
+            </div>
+            <p class="tap-hint">اضغطي على الختم لفتح الدعوة</p>
+        </div>
+    </section>
+
+    <div id="main-content" class="hidden">
+        <section class="invitation-card">
+            <h1 class="names">S & A</h1>
+            <div class="divider">✦</div>
+            <p class="welcome-text">بداية مباركة وفصل جديد..</p>
+            <p class="date">18 أبريل 2026</p>
+            <p class="location">فينكا كوماسيما</p>
+            
+            <div class="countdown">
+                <div class="time-unit"><span id="days">00</span> يوم</div>
+                <div class="time-unit"><span id="hours">00</span> ساعة</div>
+            </div>
+
+            <div class="rsvp-section">
+                <h3>تأكيد الحضور</h3>
+                <form id="rsvp-form">
+                    <input type="text" placeholder="الاسم الكامل" required>
+                    <input type="number" placeholder="عدد المرافقين" min="0">
+                    <button type="submit" class="btn-submit">تأكيد الآن</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function openInvitation() {
+            document.getElementById('envelope').classList.add('open');
+            setTimeout(() => {
+                document.getElementById('main-content').classList.remove('hidden');
+                window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
