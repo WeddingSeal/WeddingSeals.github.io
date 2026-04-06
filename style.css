@@ -1,152 +1,61 @@
 :root {
     --baby-pink: #fdf2f5;
-    --rose-gold: #e5b4a2; /* ذهبي وردي ناعم */
+    --rose-gold: #e5b4a2;
     --dark-rose-gold: #b78472;
     --dark-pink: #f8bbd0;
-    --text-color: #5d4037;
-    --white: rgba(255, 255, 255, 0.94);
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Noto Kufi Arabic', sans-serif;
-    background: linear-gradient(rgba(253, 242, 245, 0.85), rgba(253, 242, 245, 0.85)), 
-                url('photo1.jpg'); /* تأكدي من وجود الصورة في GitHub */
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: var(--text-color);
-    text-align: center;
+    background: linear-gradient(rgba(253, 242, 245, 0.8), rgba(253, 242, 245, 0.8)), url('photo1.jpg');
+    background-size: cover; background-attachment: fixed;
+    margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
 }
 
-/* المغلف */
-.hero-envelope {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1500px;
-}
+.wrapper { position: relative; width: 100%; max-width: 400px; padding-top: 100px; }
 
+.envelope-wrapper { position: relative; cursor: pointer; transition: 0.5s; }
+
+/* جسم الظرف السفلي */
 .envelope {
-    width: 300px;
-    height: 200px;
-    background-color: var(--dark-pink);
-    border-radius: 10px;
-    box-shadow: 0 15px 35px rgba(183, 132, 114, 0.3);
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 1s ease;
+    position: relative; width: 320px; height: 200px; background: var(--dark-pink);
+    margin: 0 auto; border-radius: 0 0 10px 10px; z-index: 10;
 }
 
-.envelope::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 0; height: 0;
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    border-top: 110px solid #f48fb1;
-    transform-origin: top;
-    transition: transform 0.8s ease 0.2s;
-    z-index: 3;
+/* غطاء الظرف */
+.envelope::before {
+    content: ''; position: absolute; top: -110px; left: 0;
+    border-left: 160px solid transparent; border-right: 160px solid transparent;
+    border-bottom: 110px solid #f48fb1; z-index: 5; transition: 0.5s; transform-origin: bottom;
 }
 
-.envelope.open { transform: rotateX(180deg) translateY(-50px); }
-.envelope.open::after { transform: rotateX(180deg); }
+.envelope-wrapper.open .envelope::before { transform: rotateX(180deg); z-index: 1; }
 
+/* الختم */
 .wax-seal {
-    width: 75px; height: 75px;
-    background: radial-gradient(circle, #e5b4a2 0%, #b78472 100%);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    display: flex; justify-content: center; align-items: center;
-    animation: pulse 2s infinite;
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    width: 70px; height: 70px; background: radial-gradient(circle, #e5b4a2, #b78472);
+    border-radius: 50%; position: absolute; top: -35px; left: 50%;
+    transform: translateX(-50%); z-index: 15; display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-.initials { 
-    font-family: 'Cinzel Decorative', cursive; 
-    color: #fff5f2; 
-    font-weight: bold; 
-    font-size: 22px;
+.initials { font-family: 'Cinzel Decorative'; color: white; font-weight: bold; }
+
+/* الورقة (الدعوة) */
+.letter {
+    position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 90%; background: rgba(255, 255, 255, 0.95); padding: 20px;
+    border-radius: 10px; transition: 1s; z-index: 2; opacity: 0;
 }
 
-/* البطاقة */
-#main-content {
-    background-color: var(--white);
-    backdrop-filter: blur(10px);
-    padding: 50px 20px;
-    border-radius: 30px 30px 0 0;
-    margin-top: -30px;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-    border-top: 4px solid var(--rose-gold);
-}
+.envelope-wrapper.open .letter { transform: translate(-50%, -110%); opacity: 1; z-index: 20; }
 
-.hidden { display: none; }
+/* تنسيق البطاقة داخل الورقة */
+.invitation-card { text-align: center; color: #5d4037; }
+.names { font-family: 'Cinzel Decorative'; color: var(--dark-rose-gold); font-size: 28px; }
+.location-name { color: #e91e63; font-weight: bold; }
+.countdown { display: flex; justify-content: center; gap: 10px; margin: 15px 0; }
+.time-unit { background: var(--baby-pink); padding: 8px; border-radius: 8px; font-size: 14px; }
+.btn-submit { background: #ec407a; color: white; border: none; padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; }
 
-.names { 
-    font-family: 'Cinzel Decorative', cursive; 
-    font-size: 42px; 
-    color: var(--dark-rose-gold); 
-    margin-bottom: 5px;
-}
-
-.divider { color: var(--rose-gold); margin-bottom: 15px; }
-
-.location-name { font-size: 26px; color: #e91e63; margin: 10px 0; font-weight: bold; }
-
-.countdown { display: flex; justify-content: center; gap: 12px; margin: 30px 0; }
-
-.time-unit { 
-    background: white; 
-    padding: 12px; 
-    border-radius: 12px; 
-    border: 1px solid var(--dark-pink); 
-    min-width: 75px; 
-    color: #e91e63; 
-    font-weight: bold; 
-}
-
-/* النموذج */
-.rsvp-section { 
-    background: rgba(248, 187, 208, 0.15); 
-    padding: 25px; 
-    border-radius: 20px; 
-    margin-top: 30px; 
-    border: 1px dashed var(--rose-gold);
-}
-
-#rsvp-form input { 
-    width: 100%; 
-    padding: 14px; 
-    margin-bottom: 12px; 
-    border-radius: 10px; 
-    border: 1px solid var(--dark-pink); 
-    background: white;
-}
-
-.btn-submit { 
-    width: 100%; 
-    padding: 16px; 
-    background: linear-gradient(45deg, #f06292, #ec407a); 
-    color: white; 
-    border: none; 
-    border-radius: 10px; 
-    font-weight: bold; 
-    cursor: pointer; 
-    font-size: 17px;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.08); }
-}
-
-.tap-hint { margin-top: 25px; color: white; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.4); font-size: 14px; }
+.tap-hint { text-align: center; color: #b78472; font-weight: bold; margin-top: 20px; transition: 0.3s; }
