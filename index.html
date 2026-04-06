@@ -3,68 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دعوة زفاف S & A</title>
+    <title>دعوة زفاف S & A - قاعة مسرة</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <div class="envelope-wrapper" id="envelope-wrapper" onclick="openInvitation()">
-            
-            <div class="envelope-back"></div>
-            
-            <div class="letter" id="letter">
-                <div class="inner-card">
-                    <h1 class="names">S & A</h1>
-                    <p class="welcome-text">نتشرف بدعوتكم لمشاركتنا أجمل لحظات العمر.</p>
-                    <h2 class="location-name">قاعة مسرة</h2>
-                    <p class="info">وقت الحضور: 8:00 مساءً</p>
-                    <p class="info">18 أبريل 2026</p>
-                    
-                    <div class="countdown">
-                        <div class="unit"><span id="days">00</span> يوم</div>
-                        <div class="unit"><span id="hours">00</span> ساعة</div>
-                    </div>
-
-                    <div class="rsvp-box">
-                        <h3>تأكيد الحضور</h3>
-                        <form action="https://formspree.io/f/mgoprjdv" method="POST">
-                            <input type="text" name="الاسم" placeholder="الاسم الكامل" required>
-                            <input type="number" name="المرافقين" placeholder="عدد المرافقين">
-                            <button type="submit" class="btn">تأكيد الآن</button>
-                        </form>
-                    </div>
+    <section class="hero-envelope">
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="wax-seal" onclick="openInvitation()">
+                    <span class="initials">S & A</span>
                 </div>
             </div>
-
-            <div class="envelope-front"></div>
-            
-            <div class="envelope-top"></div>
-            
-            <div class="wax-seal">
-                <span class="initials">S & A</span>
-            </div>
+            <p class="tap-hint">اضغطي على الختم لفتح الدعوة</p>
         </div>
-        
-        <p class="hint" id="hint">اضغطي على الختم لفتح الدعوة</p>
+    </section>
+
+    <div id="main-content" class="hidden">
+        <section class="invitation-card">
+            <h1 class="names">S & A</h1>
+            <div class="divider">✦</div>
+            <p class="welcome-text">بكل الحب والتقدير، نتشرف بدعوتكم لمشاركتنا أجمل لحظات العمر.</p>
+            <h2 class="location-name">قاعة مسرة</h2>
+            <p class="attendance-time">وقت الحضور: 8:00 مساءً</p>
+            <p class="date">18 أبريل 2026</p>
+            
+            <div class="countdown">
+                <div class="time-unit"><span id="days">00</span> يوم</div>
+                <div class="time-unit"><span id="hours">00</span> ساعة</div>
+            </div>
+
+            <div class="rsvp-section">
+                <h3>تأكيد الحضور (RSVP)</h3>
+                <form id="rsvp-form" action="https://formspree.io/f/mgoprjdv" method="POST">
+                    <input type="text" name="الاسم" placeholder="الاسم الكامل" required>
+                    <input type="number" name="المرافقين" placeholder="عدد المرافقين" min="0">
+                    <input type="hidden" name="_subject" value="تأكيد حضور جديد - زواج S & A">
+                    <button type="submit" id="submit-btn" class="btn-submit">تأكيد الحضور الآن</button>
+                </form>
+                <p id="success-msg" style="display:none; color: #b78472; margin-top: 15px; font-weight: bold;">تم استلام تأكيدك بنجاح، ننتظرك بكل حب!</p>
+            </div>
+        </section>
     </div>
 
     <script>
-        // الوظيفة التي تضيف كلاس (open) وتخفي التلميح
         function openInvitation() {
-            document.getElementById('envelope-wrapper').classList.add('open');
-            document.getElementById('hint').style.opacity = '0';
+            document.getElementById('envelope').classList.add('open');
+            setTimeout(() => {
+                document.getElementById('main-content').classList.remove('hidden');
+                window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            }, 1000);
         }
 
-        // تحديث العداد التنازلي لليلة العمر (18 أبريل)
         const weddingDate = new Date("April 18, 2026 20:00:00").getTime();
-        setInterval(function() {
+        const timer = setInterval(function() {
             const now = new Date().getTime();
             const distance = weddingDate - now;
             document.getElementById("days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         }, 1000);
+
+        const form = document.getElementById('rsvp-form');
+        const btn = document.getElementById('submit-btn');
+        const msg = document.getElementById('success-msg');
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerText = "جاري الإرسال...";
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+            if (response.ok) {
+                msg.style.display = 'block';
+                form.style.display = 'none';
+            } else {
+                alert("حدث خطأ، حاولي مرة أخرى.");
+                btn.disabled = false;
+                btn.innerText = "تأكيد الحضور الآن";
+            }
+        });
     </script>
 </body>
 </html>
