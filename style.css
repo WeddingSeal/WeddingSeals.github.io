@@ -1,18 +1,18 @@
 :root {
     --baby-pink: #fdf2f5;
-    --gold-color: #d4af37;
+    --rose-gold: #e5b4a2; /* ذهبي وردي ناعم */
+    --dark-rose-gold: #b78472;
     --dark-pink: #f8bbd0;
     --text-color: #5d4037;
-    --white: rgba(255, 255, 255, 0.9);
+    --white: rgba(255, 255, 255, 0.94);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Noto Kufi Arabic', sans-serif;
-    /* وضع طبقة وردية شفافة فوق الصورة */
-    background: linear-gradient(rgba(253, 242, 245, 0.8), rgba(253, 242, 245, 0.8)), 
-                url('photo1.jpg');
+    background: linear-gradient(rgba(253, 242, 245, 0.85), rgba(253, 242, 245, 0.85)), 
+                url('photo1.jpg'); /* تأكدي من وجود الصورة في GitHub */
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -34,7 +34,7 @@ body {
     height: 200px;
     background-color: var(--dark-pink);
     border-radius: 10px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(183, 132, 114, 0.3);
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1s ease;
@@ -57,40 +57,96 @@ body {
 .envelope.open::after { transform: rotateX(180deg); }
 
 .wax-seal {
-    width: 70px; height: 70px;
-    background: radial-gradient(circle, #ffd700 0%, #d4af37 100%);
+    width: 75px; height: 75px;
+    background: radial-gradient(circle, #e5b4a2 0%, #b78472 100%);
     border-radius: 50%;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     z-index: 5;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     display: flex; justify-content: center; align-items: center;
     animation: pulse 2s infinite;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.initials { font-family: 'Cinzel Decorative', cursive; color: white; font-weight: bold; }
+.initials { 
+    font-family: 'Cinzel Decorative', cursive; 
+    color: #fff5f2; 
+    font-weight: bold; 
+    font-size: 22px;
+}
 
 /* البطاقة */
 #main-content {
     background-color: var(--white);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     padding: 50px 20px;
     border-radius: 30px 30px 0 0;
     margin-top: -30px;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+    border-top: 4px solid var(--rose-gold);
 }
 
 .hidden { display: none; }
 
-.names { font-family: 'Cinzel Decorative', cursive; font-size: 40px; color: var(--gold-color); }
+.names { 
+    font-family: 'Cinzel Decorative', cursive; 
+    font-size: 42px; 
+    color: var(--dark-rose-gold); 
+    margin-bottom: 5px;
+}
 
-.location-name { font-size: 26px; color: #e91e63; margin: 10px 0; }
+.divider { color: var(--rose-gold); margin-bottom: 15px; }
 
-.countdown { display: flex; justify-content: center; gap: 10px; margin: 25px 0; }
+.location-name { font-size: 26px; color: #e91e63; margin: 10px 0; font-weight: bold; }
 
-.time-unit { background: white; padding: 10px; border-radius: 10px; border: 1px solid var(--dark-pink); min-width: 70px; color: #e91e63; font-weight: bold; }
+.countdown { display: flex; justify-content: center; gap: 12px; margin: 30px 0; }
+
+.time-unit { 
+    background: white; 
+    padding: 12px; 
+    border-radius: 12px; 
+    border: 1px solid var(--dark-pink); 
+    min-width: 75px; 
+    color: #e91e63; 
+    font-weight: bold; 
+}
 
 /* النموذج */
-.rsvp-section { background: rgba(248, 187, 208, 0.2); padding: 20px; border-radius
+.rsvp-section { 
+    background: rgba(248, 187, 208, 0.15); 
+    padding: 25px; 
+    border-radius: 20px; 
+    margin-top: 30px; 
+    border: 1px dashed var(--rose-gold);
+}
+
+#rsvp-form input { 
+    width: 100%; 
+    padding: 14px; 
+    margin-bottom: 12px; 
+    border-radius: 10px; 
+    border: 1px solid var(--dark-pink); 
+    background: white;
+}
+
+.btn-submit { 
+    width: 100%; 
+    padding: 16px; 
+    background: linear-gradient(45deg, #f06292, #ec407a); 
+    color: white; 
+    border: none; 
+    border-radius: 10px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    font-size: 17px;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.tap-hint { margin-top: 25px; color: white; font-weight: bold; text-shadow: 1px 1px 4px rgba(0,0,0,0.4); font-size: 14px; }
