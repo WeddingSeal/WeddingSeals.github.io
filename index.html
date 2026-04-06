@@ -42,13 +42,12 @@
                     <input type="hidden" name="_subject" value="تأكيد حضور جديد - زواج S & A">
                     <button type="submit" id="submit-btn" class="btn-submit">تأكيد الحضور الآن</button>
                 </form>
-                <p id="success-msg" style="display:none; color: #d4af37; margin-top: 15px; font-weight: bold;">تم استلام تأكيدك بنجاح، ننتظرك بكل حب!</p>
+                <p id="success-msg" style="display:none; color: #e91e63; margin-top: 15px; font-weight: bold;">تم استلام تأكيدك بنجاح، ننتظرك بكل حب!</p>
             </div>
         </section>
     </div>
 
     <script>
-        // فتح المغلف
         function openInvitation() {
             document.getElementById('envelope').classList.add('open');
             setTimeout(() => {
@@ -57,7 +56,7 @@
             }, 1000);
         }
 
-        // ضبط العداد التنازلي
+        // تحديث العداد لتاريخ 18 أبريل
         const weddingDate = new Date("April 18, 2026 20:00:00").getTime();
         const timer = setInterval(function() {
             const now = new Date().getTime();
@@ -66,7 +65,7 @@
             document.getElementById("hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         }, 1000);
 
-        // معالجة إرسال النموذج بدون تحديث الصفحة
+        // إرسال النموذج عبر Formspree
         const form = document.getElementById('rsvp-form');
         const btn = document.getElementById('submit-btn');
         const msg = document.getElementById('success-msg');
@@ -75,18 +74,16 @@
             e.preventDefault();
             btn.disabled = true;
             btn.innerText = "جاري الإرسال...";
-            
             const response = await fetch(form.action, {
                 method: 'POST',
                 body: new FormData(form),
                 headers: { 'Accept': 'application/json' }
             });
-            
             if (response.ok) {
                 msg.style.display = 'block';
                 form.style.display = 'none';
             } else {
-                alert("عذراً، حدث خطأ. حاولي مرة أخرى.");
+                alert("حدث خطأ، حاولي مرة أخرى.");
                 btn.disabled = false;
                 btn.innerText = "تأكيد الحضور الآن";
             }
